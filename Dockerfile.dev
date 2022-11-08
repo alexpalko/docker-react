@@ -1,0 +1,18 @@
+#docker build -f Dockerfile.dev -t alex:frontend .
+#docker run  -p 3000:3000 -v /home/node/app/node_modules -v /home/alex/docker_course/frontend:/home/node/app alex:frontend
+FROM node:alpine
+
+USER node
+
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+COPY --chown=node:node ./package.json ./
+RUN npm install
+
+# Not necessary when using volumes, however this will be needed in prod
+# We currently use volumes to reflect changes in the webapp sorucecode 
+# without having to redeploy the image.
+COPY --chown=node:node ./ ./
+
+CMD ["npm", "run", "start"]
