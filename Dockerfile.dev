@@ -14,5 +14,4 @@ RUN npm install
 # We currently use volumes to reflect changes in the webapp sorucecode 
 # without having to redeploy the image.
 COPY --chown=node:node ./ ./
-
 CMD ["npm", "run", "start"]
